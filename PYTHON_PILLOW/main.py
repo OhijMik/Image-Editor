@@ -1,9 +1,10 @@
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageFilter
 
 images_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images\\"
 images_cropped_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_cropped\\"
 images_brightness_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_brightness\\"
 images_copied_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\two_images\\"
+images_filtered_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\filtered_images\\"
 
 beach1_img = Image.open(images_path + "beach1.jpg")
 
@@ -30,3 +31,13 @@ def paste_image_onto_another():
     beach2_copy.save(images_copied_path + "beach2_copy.jpg")
     beach2_copy.show()
 
+
+def apply_filter():
+    beach2_img = Image.open(images_path + "beach2.jpg")
+    # beach2_filtered = beach2_img.filter(ImageFilter.CONTOUR)
+    # beach2_filtered = beach2_img.filter(ImageFilter.DETAIL)
+    beach2_filtered = beach2_img.filter(ImageFilter.SMOOTH_MORE)
+    beach2_filtered.save(images_filtered_path + "beach2_filtered.jpg")
+    beach2_filtered.show()
+
+apply_filter()
