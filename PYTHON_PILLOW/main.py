@@ -5,6 +5,7 @@ images_cropped_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\im
 images_brightness_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_brightness\\"
 images_copied_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\two_images\\"
 images_filtered_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\filtered_images\\"
+images_black_and_white_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_black_and_white\\"
 
 beach1_img = Image.open(images_path + "beach1.jpg")
 
@@ -40,4 +41,15 @@ def apply_filter():
     beach2_filtered.save(images_filtered_path + "beach2_filtered.jpg")
     beach2_filtered.show()
 
-apply_filter()
+
+def turn_images_black_and_white():
+    beach2_img = Image.open(images_path + "beach2.jpg")
+    beach2_black_and_white = beach2_img.convert("L").show()
+    beach2_black_and_white.save(images_black_and_white_path + "beach2_black_and_white")
+
+
+def rotate_image():
+    beach2_img = Image.open(images_path + "beach2.jpg")
+    beach2_img.rotate(90).show()
+
+rotate_image()
