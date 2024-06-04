@@ -1,4 +1,4 @@
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance, ImageFilter, ImageDraw, ImageOps
 
 images_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images\\"
 images_cropped_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_cropped\\"
@@ -6,6 +6,9 @@ images_brightness_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\
 images_copied_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\two_images\\"
 images_filtered_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\filtered_images\\"
 images_black_and_white_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_black_and_white\\"
+images_resized_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\resized_images\\"
+images_reflected_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\reflected_images\\"
+
 
 beach1_img = Image.open(images_path + "beach1.jpg")
 
@@ -52,4 +55,28 @@ def rotate_image():
     beach2_img = Image.open(images_path + "beach2.jpg")
     beach2_img.rotate(90).show()
 
-rotate_image()
+
+def draw_rectangle():
+    beach2_img = Image.open(images_path + "beach2.jpg")
+    beach2_copied = beach2_img.copy()
+    ImageDraw.Draw(beach2_copied).rectangle([(50, 10), (60, 50)], (6, 87, 90))
+    beach2_copied.show()
+
+
+def resize_image(image):
+    image_resized = image.resize((400, 200))
+    image_resized.save(images_resized_path + "beach_resized.jpg")
+    image_resized.show()
+
+
+def reflect_image(image):
+    reflected_image = ImageOps.mirror(image)
+    reflected_image.save(images_reflected_path + "beach_reflected.jpg")
+    reflected_image.show()
+
+
+def create_frame(image):
+    image_framed = ImageOps.expand(image.copy(), border=5, fill="yellow")
+    image_framed.show()
+
+create_frame(beach1_img)
