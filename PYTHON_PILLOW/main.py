@@ -11,85 +11,91 @@ images_resized_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\re
 images_reflected_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\reflected_images\\"
 
 
-beach1_img = Image.open(images_path + "beach1.jpg")
-beach2_img = Image.open(images_path + "beach2.jpg")
+class MyPillow:
+    def adjust_brightness(self, image):
+        opened_image = Image.open(images_path + image)
+        adjusted = ImageEnhance.Brightness(opened_image).enhance(0.5)
+        adjusted.save(images_brightness_path + self.generate_image_name())
+        adjusted.show()
 
 
-# beach1Img.show()
-
-def adjust_brightness():
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    beach2_adjusted = ImageEnhance.Brightness(beach2_img).enhance(0.5)
-    beach2_adjusted.save(images_brightness_path + generate_image_name())
-    beach2_adjusted.show()
+    def crop_image(self, image):
+        opened_image = Image.open(images_path + image)
+        cropped = opened_image.crop((50, 0, 150, 100))
+        cropped.save(images_cropped_path + self.generate_image_name())
+        cropped.show()
 
 
-def crop_image():
-    beach1_cropped = beach1_img.crop((50, 0, 150, 100))
-    beach1_cropped.save(images_cropped_path + generate_image_name())
-    beach1_cropped.show()
+    def paste_image_onto_another(self, image1, image2):
+        opened_image1 = Image.open(images_path + image1)
+        opened_image2 = Image.open(images_path + image2)
+        copyied_image = opened_image2.copy()
+        copyied_image.paste(opened_image1, (0, 100))
+        copyied_image.save(images_copied_path + self.generate_image_name())
+        copyied_image.show()
 
 
-def paste_image_onto_another():
-    beach1_img = Image.open(images_path + "beach1.jpg")
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    beach2_copy = beach2_img.copy()
-    beach2_copy.paste(beach1_img, (0, 100))
-    beach2_copy.save(images_copied_path + generate_image_name())
-    beach2_copy.show()
+    def apply_filter(self, image):
+        opened_image = Image.open(images_path + image)
+        # beach2_filtered = beach2_img.filter(ImageFilter.CONTOUR)
+        # beach2_filtered = beach2_img.filter(ImageFilter.DETAIL)
+        filtered = opened_image.filter(ImageFilter.SMOOTH_MORE)
+        filtered.save(images_filtered_path + self.generate_image_name())
+        filtered.show()
 
 
-def apply_filter():
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    # beach2_filtered = beach2_img.filter(ImageFilter.CONTOUR)
-    # beach2_filtered = beach2_img.filter(ImageFilter.DETAIL)
-    beach2_filtered = beach2_img.filter(ImageFilter.SMOOTH_MORE)
-    beach2_filtered.save(images_filtered_path + generate_image_name())
-    beach2_filtered.show()
+    def turn_images_black_and_white(self, image):
+        opened_image = Image.open(images_path + image)
+        black_and_white = opened_image.convert("L").show()
+        black_and_white.save(images_black_and_white_path + self.generate_image_name())
 
 
-def turn_images_black_and_white():
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    beach2_black_and_white = beach2_img.convert("L").show()
-    beach2_black_and_white.save(images_black_and_white_path + generate_image_name())
+    def rotate_image(self, image):
+        opened_image = Image.open(images_path + image)
+        opened_image.rotate(90).show()
 
 
-def rotate_image():
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    beach2_img.rotate(90).show()
+    def draw_rectangle(self, image):
+        opened_image = Image.open(images_path + image)
+        copied_image = opened_image.copy()
+        ImageDraw.Draw(copied_image).rectangle([(50, 10), (60, 50)], (6, 87, 90))
+        copied_image.show()
 
 
-def draw_rectangle():
-    beach2_img = Image.open(images_path + "beach2.jpg")
-    beach2_copied = beach2_img.copy()
-    ImageDraw.Draw(beach2_copied).rectangle([(50, 10), (60, 50)], (6, 87, 90))
-    beach2_copied.show()
+    def resize_image(self, image):
+        opened_image = Image.open(images_path + image)
+        image_resized = opened_image.resize((400, 200))
+        image_resized.save(images_resized_path + self.generate_image_name())
+        image_resized.show()
 
 
-def resize_image(image):
-    image_resized = image.resize((400, 200))
-    image_resized.save(images_resized_path + generate_image_name())
-    image_resized.show()
+    def reflect_image(self, image):
+        opened_image = Image.open(images_path + image)
+        reflected_image = ImageOps.mirror(opened_image)
+        reflected_image.save(images_reflected_path + self.generate_image_name())
+        reflected_image.show()
 
 
-def reflect_image(image):
-    reflected_image = ImageOps.mirror(image)
-    reflected_image.save(images_reflected_path + generate_image_name())
-    reflected_image.show()
+    def create_frame(self, image):
+        opened_image = Image.open(images_path + image)
+        image_framed = ImageOps.expand(opened_image.copy(), border=5, fill="yellow")
+        image_framed.show()
 
 
-def create_frame(image):
-    image_framed = ImageOps.expand(image.copy(), border=5, fill="yellow")
-    image_framed.show()
+    def generate_image_name(self):
+        t = str(int(time.time()))
+        return t + ".jpg"
 
 
-def generate_image_name():
-    t = str(int(time.time()))
-    return t + ".jpg"
+    def blend_two_images(self, img1, img2):
+        image1 = Image.open(images_path + img1)
+        image2 = Image.open(images_path + img2)
+        if image1.size == image2.size:
+            new_img = Image.blend(image1, image2, 0.5)
+            new_img.show()
+        else:
+            print("The two images don't have the same sizes")
 
 
-def blend_two_images(img1, img2):
-    new_img = Image.blend(img1, img2, 0.5)
-    new_img.show()
-
-blend_two_images(beach1_img, beach2_img)
+my_pillow = MyPillow()
+my_pillow.blend_two_images("beach1.jpg", "beach2.jpg")
