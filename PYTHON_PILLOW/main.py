@@ -28,11 +28,11 @@ class MyPillow:
         cropped.show()
 
 
-    def paste_image_onto_another(self, image1, image2):
+    def paste_image_onto_another(self, image1, image2, coordinate):
         opened_image1 = Image.open(self.images_path + image1)
         opened_image2 = Image.open(self.images_path + image2)
         copyied_image = opened_image2.copy()
-        copyied_image.paste(opened_image1, (0, 100))
+        copyied_image.paste(opened_image1, coordinate)
         copyied_image.save(self.images_copied_path + self.generate_image_name())
         copyied_image.show()
 
@@ -99,6 +99,22 @@ class MyPillow:
             print("The two images don't have the same sizes")
 
 
+def str_to_tup(s):
+    lst = []
+    temp = ""
+    for i in s:
+        if i.isnumeric():
+            temp += i
+        else:
+            if temp != "":
+                lst.append(int(temp))
+                temp = ""
+    if temp != "":
+        lst.append(int(temp))
+        temp = ""
+    return tuple(lst)
+
+
 if __name__ == "__main__":
     my_pillow = MyPillow()
     while True:
@@ -114,11 +130,18 @@ if __name__ == "__main__":
                 brightness = float(input("What brightness do you want it to be? (default: 1.0): "))
                 my_pillow.adjust_brightness(image, brightness)
             case "c":
-                rect = tuple(input("What rectangle do you want to crop out? (x1, y1, x2, y2): "))
+                # x1 = int(input("What is the x1 coordinate of the crop?: "))
+                # y1 = int(input("What is the y1 coordinate of the crop?: "))
+                # x2 = int(input("What is the x2 coordinate of the crop?: "))
+                # y2 = int(input("What is the y2 coordinate of the crop?: "))
+                rect = str_to_tup(input("What is the rectangle coordinates of the crop? (x1, y1, x2, y2): "))
+                
                 print(rect)
-                my_pillow.crop_image(image, rect)
+                my_pillow.crop_image(image, (rect))
             case "p":
-                my_pillow.paste_image_onto_another(image, 0.5)
+                image2 = input("Select another image to paste: ")
+                coordinate = input("What coordinate do you want to paste the image?: ")
+                my_pillow.paste_image_onto_another(image, image2, coordinate)
             case "f":
                 my_pillow.apply_filter(image, 0.5)
             case "bw":
