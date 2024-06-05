@@ -14,16 +14,16 @@ class MyPillow:
         self.images_reflected_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\reflected_images\\"
 
         
-    def adjust_brightness(self, image):
+    def adjust_brightness(self, image, factor):
         opened_image = Image.open(self.images_path + image)
-        adjusted = ImageEnhance.Brightness(opened_image).enhance(0.5)
+        adjusted = ImageEnhance.Brightness(opened_image).enhance(factor)
         adjusted.save(self.images_brightness_path + self.generate_image_name())
         adjusted.show()
 
 
-    def crop_image(self, image):
+    def crop_image(self, image, rect):
         opened_image = Image.open(self.images_path + image)
-        cropped = opened_image.crop((50, 0, 150, 100))
+        cropped = opened_image.crop(rect)
         cropped.save(self.images_cropped_path + self.generate_image_name())
         cropped.show()
 
@@ -99,6 +99,37 @@ class MyPillow:
             print("The two images don't have the same sizes")
 
 
-my_pillow = MyPillow()
+if __name__ == "__main__":
+    my_pillow = MyPillow()
+    while True:
+        image = input("What image do you want to edit?: ")
+        print("Adjust brightness: b \nCrop image: c \nPaste image onto eachother: p \n"
+            "Apply filter: f \nTurn image black and white: bw \nRotate image: rot \n"
+            "Draw rectangle: d \nResize image: res \nReflect image: ref")
+    
+        edit = input("What do you want to edit?: ")
 
-image = input("What image do you want to edit?: ")
+        match edit:
+            case "b":
+                brightness = float(input("What brightness do you want it to be? (default: 1.0): "))
+                my_pillow.adjust_brightness(image, brightness)
+            case "c":
+                rect = tuple(input("What rectangle do you want to crop out? (x1, y1, x2, y2): "))
+                print(rect)
+                my_pillow.crop_image(image, rect)
+            case "p":
+                my_pillow.paste_image_onto_another(image, 0.5)
+            case "f":
+                my_pillow.apply_filter(image, 0.5)
+            case "bw":
+                my_pillow.turn_images_black_and_white(image, 0.5)
+            case "rot":
+                my_pillow.rotate_image(image, 0.5)
+            case "d":
+                my_pillow.draw_rectangle(image, 0.5)
+            case "res":
+                my_pillow.resize_image(image, 0.5)
+            case "ref":
+                my_pillow.reflect_image(image, 0.5)
+            case _:
+                print("Please select one of the edits from above")
