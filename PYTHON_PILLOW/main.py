@@ -1,4 +1,5 @@
 from PIL import Image, ImageEnhance, ImageFilter, ImageDraw, ImageOps
+import time
 
 images_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images\\"
 images_cropped_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\images_cropped\\"
@@ -17,7 +18,7 @@ beach1_img = Image.open(images_path + "beach1.jpg")
 def adjust_brightness():
     beach2_img = Image.open(images_path + "beach2.jpg")
     beach2_adjusted = ImageEnhance.Brightness(beach2_img).enhance(0.5)
-    beach2_adjusted.save(images_brightness_path + "beach2_adjusted.jpg")
+    beach2_adjusted.save(images_brightness_path + generate_image_name())
     beach2_adjusted.show()
 
 
@@ -79,4 +80,9 @@ def create_frame(image):
     image_framed = ImageOps.expand(image.copy(), border=5, fill="yellow")
     image_framed.show()
 
-create_frame(beach1_img)
+
+def generate_image_name():
+    t = str(int(time.time()))
+    return t + ".jpg"
+
+adjust_brightness()
