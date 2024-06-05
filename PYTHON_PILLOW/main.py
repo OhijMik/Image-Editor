@@ -12,6 +12,8 @@ images_reflected_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\
 
 
 beach1_img = Image.open(images_path + "beach1.jpg")
+beach2_img = Image.open(images_path + "beach2.jpg")
+
 
 # beach1Img.show()
 
@@ -24,7 +26,7 @@ def adjust_brightness():
 
 def crop_image():
     beach1_cropped = beach1_img.crop((50, 0, 150, 100))
-    beach1_cropped.save(images_cropped_path + "beach1_cropped.jpg")
+    beach1_cropped.save(images_cropped_path + generate_image_name())
     beach1_cropped.show()
 
 
@@ -33,7 +35,7 @@ def paste_image_onto_another():
     beach2_img = Image.open(images_path + "beach2.jpg")
     beach2_copy = beach2_img.copy()
     beach2_copy.paste(beach1_img, (0, 100))
-    beach2_copy.save(images_copied_path + "beach2_copy.jpg")
+    beach2_copy.save(images_copied_path + generate_image_name())
     beach2_copy.show()
 
 
@@ -42,14 +44,14 @@ def apply_filter():
     # beach2_filtered = beach2_img.filter(ImageFilter.CONTOUR)
     # beach2_filtered = beach2_img.filter(ImageFilter.DETAIL)
     beach2_filtered = beach2_img.filter(ImageFilter.SMOOTH_MORE)
-    beach2_filtered.save(images_filtered_path + "beach2_filtered.jpg")
+    beach2_filtered.save(images_filtered_path + generate_image_name())
     beach2_filtered.show()
 
 
 def turn_images_black_and_white():
     beach2_img = Image.open(images_path + "beach2.jpg")
     beach2_black_and_white = beach2_img.convert("L").show()
-    beach2_black_and_white.save(images_black_and_white_path + "beach2_black_and_white")
+    beach2_black_and_white.save(images_black_and_white_path + generate_image_name())
 
 
 def rotate_image():
@@ -66,13 +68,13 @@ def draw_rectangle():
 
 def resize_image(image):
     image_resized = image.resize((400, 200))
-    image_resized.save(images_resized_path + "beach_resized.jpg")
+    image_resized.save(images_resized_path + generate_image_name())
     image_resized.show()
 
 
 def reflect_image(image):
     reflected_image = ImageOps.mirror(image)
-    reflected_image.save(images_reflected_path + "beach_reflected.jpg")
+    reflected_image.save(images_reflected_path + generate_image_name())
     reflected_image.show()
 
 
@@ -85,4 +87,9 @@ def generate_image_name():
     t = str(int(time.time()))
     return t + ".jpg"
 
-adjust_brightness()
+
+def blend_two_images(img1, img2):
+    new_img = Image.blend(img1, img2, 0.5)
+    new_img.show()
+
+blend_two_images(beach1_img, beach2_img)
