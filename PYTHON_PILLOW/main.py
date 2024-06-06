@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 my_pillow.crop_image(image, (rect))
             case "p":
                 image2 = input("Select another image to paste: ")
-                coordinate = input("What coordinate do you want to paste the image?: ")
+                coordinate = str_to_tup(input("What coordinate do you want to paste the image?: "))
                 my_pillow.paste_image_onto_another(image, image2, coordinate)
             case "f":
                 my_pillow.apply_filter(image, 0.5)
