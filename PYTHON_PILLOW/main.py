@@ -14,19 +14,23 @@ class MyPillow:
         self.images_resized_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\resized_images\\"
         self.images_reflected_path = "C:\\Users\\jihok\\GitHub\\Image-Editor\\PYTHON_PILLOW\\reflected_images\\"
 
-    def adjust_brightness(self, image, factor = 1.0):
+    def adjust_brightness(self, image):
+        brightness = float(input("What brightness do you want it to be? (default: 1.0): "))
         opened_image = Image.open(self.images_path + image)
-        adjusted = ImageEnhance.Brightness(opened_image).enhance(factor)
+        adjusted = ImageEnhance.Brightness(opened_image).enhance(brightness)
         adjusted.save(self.images_brightness_path + self.generate_image_name())
         adjusted.show()
 
-    def crop_image(self, image, rect):
+    def crop_image(self, image):
+        rect = str_to_tup(input("What is the rectangle coordinates of the crop? (x1, y1, x2, y2): "))
         opened_image = Image.open(self.images_path + image)
         cropped = opened_image.crop(rect)
         cropped.save(self.images_cropped_path + self.generate_image_name())
         cropped.show()
 
-    def paste_image_onto_another(self, image1, image2, coordinate):
+    def paste_image_onto_another(self, image1):
+        image2 = input("Select another image to paste: ")
+        coordinate = str_to_tup(input("What coordinate do you want to paste the image?: "))
         opened_image1 = Image.open(self.images_path + image1)
         opened_image2 = Image.open(self.images_path + image2)
         copyied_image = opened_image2.copy()
@@ -130,33 +134,21 @@ if __name__ == "__main__":
 
         match edit:
             case "b":
-                brightness = float(input("What brightness do you want it to be? (default: 1.0): "))
-                my_pillow.adjust_brightness(image, brightness)
-                break
+                my_pillow.adjust_brightness(image)
             case "c":
-                rect = str_to_tup(input("What is the rectangle coordinates of the crop? (x1, y1, x2, y2): "))
-                print(rect)
-                my_pillow.crop_image(image, (rect))
-                break
+                my_pillow.crop_image(image)
             case "p":
-                image2 = input("Select another image to paste: ")
-                coordinate = str_to_tup(input("What coordinate do you want to paste the image?: "))
-                my_pillow.paste_image_onto_another(image, image2, coordinate)
-                break
+                my_pillow.paste_image_onto_another(image)
             case "f":
                 my_pillow.apply_filter(image)
-                break
             case "bw":
                 my_pillow.turn_images_black_and_white(image)
-                break
             case "rot":
                 my_pillow.rotate_image(image)
-                break
             case "res":
                 my_pillow.resize_image(image)
-                break
             case "ref":
                 my_pillow.reflect_image(image)
-                break
             case _:
                 print("Please select one of the edits from above")
+        break
